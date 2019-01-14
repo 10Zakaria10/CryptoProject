@@ -1,0 +1,96 @@
+﻿@model IEnumerable<cryptoProject.Models.Question>
+
+@{
+    ViewBag.Title = "score page";
+
+}
+
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: gray;
+            color: white;
+            font-size: 20px;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+
+</head>
+
+
+<h1>Scores :</h1>
+
+<table style="width:100%">
+    <tr>
+        <th>Categories</th>
+        <th>Valide</th>
+        <th>Non Valide</th>
+        <th>Score</th>
+
+    </tr>
+
+
+    @foreach (var x in ViewBag.categories)
+    {
+        ViewBag.score = x.score / ViewData[x.nom];
+        <tr>
+            <td>@x.nom</td>
+            <td>@x.score</td>
+            <td>@ViewData[x.nom]</td>
+            <td>@ViewBag.score </td>
+        </tr>
+
+    }
+
+
+</table>
+
+
+<h1>Solutions :</h1>
+
+<table style="width:100%">
+
+
+    @foreach (var x in ViewBag.categories)
+    {
+        <tr>
+            <th>@x.nom</th>
+            <th>Solution</th>
+        </tr>
+
+
+
+        foreach (var q in Model)
+        {
+
+            if (q.id_cat == x.id)
+            {
+                <tr>
+                    <td>@q.nom</td>
+                    <td> @q.Solution.description </td>
+                </tr>
+
+            }
+        }
+
+
+    }
+
+
+</table>
+<br />
+
+
+
+
+
+<img src="@Url.Action("BillChart")" alt="simpleChart" />

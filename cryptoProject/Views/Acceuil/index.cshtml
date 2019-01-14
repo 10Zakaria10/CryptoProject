@@ -1,0 +1,71 @@
+﻿@model IEnumerable<cryptoProject.Models.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: gray;
+            color: white;
+            font-size: 20px;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: left;
+        }
+    </style>
+
+</head>
+
+
+
+<form action="/Acceuil/scorePage" method="post">
+
+
+    <table style="width:100%">
+
+
+        @foreach (var x in ViewBag.categories)
+        {
+            <tr>
+                <th>@x.nom</th>
+                <th>Exist</th>
+            </tr>
+
+
+
+            foreach (var q in Model)
+            {
+
+                if (q.id_cat == x.id)
+                {
+                    <tr>
+                        <td>@q.nom</td>
+                        <td> <input id="rememb" type="checkbox" value="true" name=@q.id /> </td>
+                    </tr>
+
+                }
+            }
+
+
+        }
+
+
+    </table>
+    <br />
+    <p>
+        <input type="submit" value="Valider" />
+    </p>
+
+</form>
+
+
+
