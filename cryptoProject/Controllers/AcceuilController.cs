@@ -10,7 +10,10 @@ namespace cryptoProject.Controllers
 {
     public class AcceuilController : Controller
     {
+        // Database context
         QuestionnaireDBEntities qstDB = new QuestionnaireDBEntities();
+        
+        
         // GET: Acceuil
         public ActionResult Index()
         {
