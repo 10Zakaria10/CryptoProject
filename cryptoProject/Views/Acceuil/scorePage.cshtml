@@ -33,7 +33,8 @@
     <tr>
         <th>Categories</th>
         <th>Valide</th>
-        <th>Non Valide</th>
+        <th>Non valide</th>
+        <th>Somme des notes</th>
         <th>Score</th>
 
     </tr>
@@ -41,12 +42,15 @@
 
     @foreach (var x in ViewBag.categories)
     {
-        ViewBag.score = x.score / ViewData[x.nom];
+        String sumExistlKey = x.nom + "sumExist";
+        String nonExistlKey = x.nom + "nonExist";
+        ViewBag.score = (x.score / ViewData[x.nom])*100;
         <tr>
             <td>@x.nom</td>
-            <td>@x.score</td>
+            <td>@ViewData[sumExistlKey]</td>
+            <td>@ViewData[nonExistlKey]</td>
             <td>@ViewData[x.nom]</td>
-            <td>@ViewBag.score </td>
+            <td>@ViewBag.score %</td>
         </tr>
 
     }

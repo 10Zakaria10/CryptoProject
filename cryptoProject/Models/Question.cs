@@ -19,6 +19,7 @@ namespace cryptoProject.Models
         public Nullable<int> id_cat { get; set; }
         public Nullable<int> coeficiant { get; set; }
         public Nullable<int> id_sol { get; set; }
+        public Nullable<byte> reponse { get; set; }
     
         public virtual Categorie Categorie { get; set; }
         public virtual Solution Solution { get; set; }

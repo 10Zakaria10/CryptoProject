@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuestionnaireDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuestionnaireDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categorie">
           <Key>
             <PropertyRef Name="id" />
@@ -22,6 +22,7 @@
           <Property Name="id_cat" Type="int" />
           <Property Name="coeficiant" Type="int" />
           <Property Name="id_sol" Type="int" />
+          <Property Name="reponse" Type="tinyint" />
         </EntityType>
         <EntityType Name="Solution">
           <Key>
@@ -67,8 +68,7 @@
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuestionnaireDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -92,6 +92,7 @@
           <Property Name="id_sol" Type="Int32" />
           <NavigationProperty Name="Categorie" Relationship="Self.FK_Question_Categorie" FromRole="Question" ToRole="Categorie" />
           <NavigationProperty Name="Solution" Relationship="Self.FK_Question_Solution" FromRole="Question" ToRole="Solution" />
+          <Property Name="reponse" Type="Byte" />
         </EntityType>
         <EntityType Name="Solution">
           <Key>
@@ -156,6 +157,7 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="QuestionnaireDBModel.Question">
               <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="reponse" ColumnName="reponse" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="nom" ColumnName="nom" />
                 <ScalarProperty Name="id_cat" ColumnName="id_cat" />

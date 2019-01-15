@@ -12,14 +12,10 @@ namespace cryptoProject.Controllers
     {
         // Database context
         QuestionnaireDBEntities qstDB = new QuestionnaireDBEntities();
-        
-        
-        // GET: Acceuil
-        public ActionResult Index()
+
+        public void initializ()
         {
-            // juste dans la phase des tests : a chaque fois je refai le score a 0 
             var x = from c in qstDB.Questions select c;
-            var cat = from c in qstDB.Categories select c;
 
             foreach (Question qst in x)
             {
@@ -27,12 +23,24 @@ namespace cryptoProject.Controllers
                     var categorie = (from c in qstDB.Categories where c.id == qst.id_cat select c).SingleOrDefault();
 
                     categorie.score = 0;
-
+                    qst.reponse = 0;
                 }
 
             }
             qstDB.SaveChanges();
 
+        }
+        // GET: Acceuil
+        public ActionResult Index()
+        {
+
+            // juste dans la phase des tests : a chaque fois je refai le score a 0 
+            initializ();
+
+            var x = from c in qstDB.Questions select c;
+            var cat = from c in qstDB.Categories select c;
+
+           
 
             ViewBag.questions = x;
             ViewBag.categories = cat;
@@ -43,6 +51,8 @@ namespace cryptoProject.Controllers
         [HttpPost]
         public ActionResult scorePage(FormCollection formx)
         {
+            initializ();
+
             // les list des questions
             var qsts = from c in qstDB.Questions select c;
             List<Question> listQst = qsts.ToList();
@@ -54,8 +64,8 @@ namespace cryptoProject.Controllers
                 {
                     var categorie = (from c in qstDB.Categories where c.id == qst.id_cat select c).SingleOrDefault();
 
-                    categorie.score++;
-
+                    categorie.score += qst.coeficiant;
+                    qst.reponse = 1;
                 } // j'affiche la solution que des questions non  selectione 
                 else
                 {
@@ -69,9 +79,18 @@ namespace cryptoProject.Controllers
             var cat = from c in qstDB.Categories select c;
             foreach (Categorie categorie in cat)
             {
-                String key = categorie.nom;
-                //total des questions de chaque categorie
-                ViewData[key] = (double)(from c in qstDB.Questions where c.id_cat == categorie.id select c).Count();
+                String totalKey = categorie.nom;
+                //somme des score des questions de chaque categorie
+                double total = (double)(from c in qstDB.Questions where c.id_cat == categorie.id select c).Sum(coef => coef.coeficiant);
+                ViewData[totalKey] = total;
+                //somme des questions de categorie
+                String sumExistlKey = categorie.nom + "sumExist";
+                int sumExist = (from c in qstDB.Questions where c.id_cat == categorie.id && c.reponse == 1 select c).Count();
+                ViewData[sumExistlKey] = sumExist;
+                //somme des questions non valide de categorie
+                String nonExistlKey = categorie.nom + "nonExist";
+                int nonExist = (from c in qstDB.Questions where c.id_cat == categorie.id && c.reponse != 1 select c).Count();
+                ViewData[nonExistlKey] = nonExist;
             }
             ViewBag.categories = cat;
 
@@ -100,7 +119,7 @@ namespace cryptoProject.Controllers
                     xValue: catName,
                     yValues: catScore
                 )
-                .Write("png"); 
+                .Write("png");
 
             return null;
         }
