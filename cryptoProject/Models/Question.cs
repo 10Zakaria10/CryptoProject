@@ -15,11 +15,11 @@ namespace cryptoProject.Models
     public partial class Question
     {
         public int id { get; set; }
-        public string nom { get; set; }
         public Nullable<int> id_cat { get; set; }
         public Nullable<int> coeficiant { get; set; }
         public Nullable<int> id_sol { get; set; }
         public Nullable<byte> reponse { get; set; }
+        public string qst { get; set; }
     
         public virtual Categorie Categorie { get; set; }
         public virtual Solution Solution { get; set; }

@@ -44,7 +44,7 @@
     {
         String sumExistlKey = x.nom + "sumExist";
         String nonExistlKey = x.nom + "nonExist";
-        ViewBag.score = (x.score / ViewData[x.nom])*100;
+        ViewBag.score = (x.score / ViewData[x.nom]) * 100;
         <tr>
             <td>@x.nom</td>
             <td>@ViewData[sumExistlKey]</td>
@@ -79,7 +79,7 @@
             if (q.id_cat == x.id)
             {
                 <tr>
-                    <td>@q.nom</td>
+                    <td>@q.qst</td>
                     <td> @q.Solution.description </td>
                 </tr>
 
@@ -94,7 +94,7 @@
 <br />
 
 
-
-
-
 <img src="@Url.Action("BillChart")" alt="simpleChart" />
+
+
+<button><a href="/Acceuil/Report"> Voir rapport </a></button>

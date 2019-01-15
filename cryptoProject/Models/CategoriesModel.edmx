@@ -18,7 +18,7 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nom" Type="text" />
+          <Property Name="qst" Type="text" />
           <Property Name="id_cat" Type="int" />
           <Property Name="coeficiant" Type="int" />
           <Property Name="id_sol" Type="int" />
@@ -86,13 +86,13 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="id_cat" Type="Int32" />
           <Property Name="coeficiant" Type="Int32" />
           <Property Name="id_sol" Type="Int32" />
           <NavigationProperty Name="Categorie" Relationship="Self.FK_Question_Categorie" FromRole="Question" ToRole="Categorie" />
           <NavigationProperty Name="Solution" Relationship="Self.FK_Question_Solution" FromRole="Question" ToRole="Solution" />
           <Property Name="reponse" Type="Byte" />
+          <Property Name="qst" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Solution">
           <Key>
@@ -157,9 +157,9 @@
           <EntitySetMapping Name="Questions">
             <EntityTypeMapping TypeName="QuestionnaireDBModel.Question">
               <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="qst" ColumnName="qst" />
                 <ScalarProperty Name="reponse" ColumnName="reponse" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="nom" ColumnName="nom" />
                 <ScalarProperty Name="id_cat" ColumnName="id_cat" />
                 <ScalarProperty Name="coeficiant" ColumnName="coeficiant" />
                 <ScalarProperty Name="id_sol" ColumnName="id_sol" />

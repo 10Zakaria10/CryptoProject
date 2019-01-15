@@ -1,6 +1,11 @@
 ﻿using cryptoProject.Models;
+using cryptoProject.Raport;
+using CrystalDecisions.CrystalReports.Engine;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Helpers;
@@ -30,10 +35,37 @@ namespace cryptoProject.Controllers
             qstDB.SaveChanges();
 
         }
+
+        public void addQst()
+        {
+            /*
+            //add solutiion 
+            Solution solution = new Solution();
+            solution.description = "SolA";
+
+            qstDB.Solutions.Add(solution);
+            //add categorie
+            Categorie cat = new Categorie();
+            cat.nom = "Securite logiciel";
+            cat.score = 0;
+            qstDB.Categories.Add(cat);
+            */        
+    
+            // add qst
+
+            Question qst = new Question();
+            qst.reponse = 0;
+            qst.qst = "D";
+            qst.coeficiant = 2;
+            qst.id_cat = 1;
+            qst.id_sol = 4;
+            qstDB.Questions.Add(qst);
+
+        }
         // GET: Acceuil
         public ActionResult Index()
         {
-
+           // addQst();
             // juste dans la phase des tests : a chaque fois je refai le score a 0 
             initializ();
 
@@ -123,6 +155,37 @@ namespace cryptoProject.Controllers
 
             return null;
         }
+        /*
+        public ActionResult ExportRap()
+        {
+            
+            ReportDocument rd = new ReportDocument();
+            rd.Load(Path.Combine(Server.MapPath("~/Raport/zak.rpt")));
+                   
+            Response.Buffer = false;
+            Response.ClearContent();
+            Response.ClearHeaders();
+            try
+            {
+                Stream stream = rd.ExportToStream(CrystalDecisions.Shared.ExportFormatType.PortableDocFormat);
+                stream.Seek(0, SeekOrigin.Begin);
+                return File(stream, "application/pdf", "AuditRapport.pdf");
+            }
+            catch
+            {
+                throw; 
+            }
+        }
+        
+    */
+        public ActionResult Report()
+        {
+            List<Question> x =( from c in qstDB.Questions where c.reponse == 0 select c ).ToList();
+            QuestionReport qstReport = new QuestionReport();
+            byte[] abytes = qstReport.PrepareReport(x);
+            return File(abytes, "application/pdf");
+        }
+        
 
     }
 }
