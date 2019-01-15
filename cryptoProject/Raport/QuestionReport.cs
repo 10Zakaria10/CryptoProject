@@ -80,7 +80,7 @@ namespace cryptoProject.Raport
             pdfTable.AddCell(pdfCell);
 
             fontStyle = FontFactory.GetFont("tahoma", 8f, 1);
-            pdfCell = new PdfPCell(new Phrase("Solution", fontStyle));
+            pdfCell = new PdfPCell(new Phrase("Recommendation", fontStyle));
             pdfCell.HorizontalAlignment = Element.ALIGN_CENTER;
             pdfCell.HorizontalAlignment = Element.ALIGN_MIDDLE;
             pdfCell.BackgroundColor = BaseColor.LIGHT_GRAY;
